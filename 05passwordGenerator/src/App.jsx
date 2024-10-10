@@ -1,9 +1,10 @@
+
 import { useCallback, useState,useEffect, useRef } from 'react'
 function App() {
   const [length, setLength] = useState(8)
   const [numberAllowed, setNumberAllowed] = useState(false)
   const [charAllowed, setCharAllowed] = useState(false)
-  const [Password, setPassword] = useState("")
+  const [password, setPassword] = useState("")
 
   // useRef hook
   const passwordRef=useRef(null)
@@ -21,9 +22,10 @@ function App() {
   },[length,numberAllowed,charAllowed,setPassword])
   const copyPasswordToClipboard=useCallback(()=>{
     passwordRef.current?.select()
-    window.navigator.Clipboard.writeText(Password)
-    
-  },[Password])
+    passwordRef.current?.setSelectionRange(0,100)
+    window.navigator.clipboard.writeText(password)
+  },[password])
+  
   useEffect(()=>{
     passwordGenerator() 
   },[length,numberAllowed,charAllowed,passwordGenerator])
@@ -34,7 +36,7 @@ function App() {
    <h1 className=' text-center text-white my-3'>Password Generator</h1>
    <div className='flex shadow rounded-lg overflow-hidden mb-4'>
    <input type="text" 
-   value={Password}
+   value={password}
    className='outline-none w-full py-1 px-3'
    placeholder='Password'
    readOnly
